@@ -139,6 +139,12 @@ func DefaultToolsetGroup(readOnly bool, getClient GetClientFn, getGQLClient GetG
 			toolsets.NewServerTool(GetMe(getClient, t)),
 		)
 
+	teams := toolsets.NewToolset("teams", "GitHub Teams related tools").
+		AddReadTools(
+			toolsets.NewServerTool(ListTeams(getClient, t)),
+			toolsets.NewServerTool(GetTeamByName(getClient, t)),
+		)
+
 	// Add toolsets to the group
 	tsg.AddToolset(contextTools)
 	tsg.AddToolset(repos)
@@ -150,6 +156,7 @@ func DefaultToolsetGroup(readOnly bool, getClient GetClientFn, getGQLClient GetG
 	tsg.AddToolset(secretProtection)
 	tsg.AddToolset(notifications)
 	tsg.AddToolset(experiments)
+	tsg.AddToolset(teams)
 
 	return tsg
 }
